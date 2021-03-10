@@ -19,13 +19,19 @@ resource "datadog_timeboard" "elb_application" {
     prefix  = "environment"
   }
 
+  template_variable {
+    default = "${var.service}"
+    name    = "service"
+    prefix  = "service"
+  }
+
   graph {
     title     = "Client TLS Negotiation Error Count"
     viz       = "timeseries"
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.client_tlsnegotiation_error_count{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.client_tlsnegotiation_error_count{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
   }
@@ -36,12 +42,12 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_elb_4xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_elb_4xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_elb_5xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_elb_5xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
   }
@@ -52,22 +58,22 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_target_2xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_target_2xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_target_4xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_target_4xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.httpcode_target_3xx{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
   }
@@ -78,7 +84,7 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.request_count{$lb_name, $environment} by {name,availability-zone}.as_count()"
+      q    = "sum:aws.applicationelb.request_count{$lb_name, $environment, $service} by {name,availability-zone}.as_count()"
       type = "line"
     }
   }
@@ -89,22 +95,22 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.healthy_host_count{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.healthy_host_count{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.healthy_host_count.maximum{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.healthy_host_count.maximum{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.healthy_host_count.minimum{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.healthy_host_count.minimum{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.healthy_host_count_deduped{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.healthy_host_count_deduped{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
   }
@@ -115,22 +121,22 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.un_healthy_host_count{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.un_healthy_host_count{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.un_healthy_host_count.maximum{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.un_healthy_host_count.maximum{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.un_healthy_host_count.minimum{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.un_healthy_host_count.minimum{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
 
     request {
-      q    = "sum:aws.applicationelb.un_healthy_host_count_deduped{$lb_name, $environment} by {name,availability-zone}"
+      q    = "sum:aws.applicationelb.un_healthy_host_count_deduped{$lb_name, $environment, $service} by {name,availability-zone}"
       type = "line"
     }
   }
@@ -141,7 +147,7 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.active_connection_count{$lb_name, $environment} by {name}"
+      q    = "sum:aws.applicationelb.active_connection_count{$lb_name, $environment, $service} by {name}"
       type = "line"
     }
   }
@@ -152,7 +158,7 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.new_connection_count{$lb_name, $environment} by {name}.as_count()"
+      q    = "sum:aws.applicationelb.new_connection_count{$lb_name, $environment, $service} by {name}.as_count()"
       type = "line"
     }
   }
@@ -163,7 +169,7 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.processed_bytes{$lb_name, $environment} by {name}.as_count()"
+      q    = "sum:aws.applicationelb.processed_bytes{$lb_name, $environment, $service} by {name}.as_count()"
       type = "line"
     }
   }
@@ -174,7 +180,7 @@ resource "datadog_timeboard" "elb_application" {
     autoscale = true
 
     request {
-      q    = "sum:aws.applicationelb.consumed_lcus{$lb_name, $environment} by {name}"
+      q    = "sum:aws.applicationelb.consumed_lcus{$lb_name, $environment, $service} by {name}"
       type = "line"
     }
   }
@@ -193,7 +199,7 @@ module "elb_application_monitor_healthy_host_count" {
   name               = "${var.healthy_host_name != "" ? 
                         "${var.healthy_host_name}" : 
                         "${var.product_domain} - ${var.lb_name} - ${var.environment} - Number of Healthy Hosts is Low"}"
-  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}} by {name} <= ${var.healthy_host_count_thresholds["critical"]}"
+  query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}, service:${var.service}}, service by {name} <= ${var.healthy_host_count_thresholds["critical"]}"
   thresholds         = "${var.healthy_host_count_thresholds}"
   evaluation_delay   = "900"
   message            = "${var.healthy_host_count_message}"
