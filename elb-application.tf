@@ -193,7 +193,6 @@ module "elb_application_monitor_healthy_host_count" {
   product_domain = "${var.product_domain}"
   service        = "${var.service}"
   environment    = "${var.environment}"
-  cluster        = "${var.cluster}"
   tags           = "${var.tags}"
   timeboard_id   = "${join(",", datadog_timeboard.elb_application.*.id)}"
 
