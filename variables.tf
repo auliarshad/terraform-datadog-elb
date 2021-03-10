@@ -29,6 +29,11 @@ variable "lb_type" {
   description = "The type of the load balancer"
 }
 
+variable "shared_alb" {
+  type        = "string"
+  description = "The indicator of shared alb"
+}
+
 variable "environment" {
   type        = "string"
   default     = "*"
