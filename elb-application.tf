@@ -1,5 +1,5 @@
 locals {
-  elb_application_monitor_enabled = "${var.enabled && var.lb_type == "application" && length(var.recipients) > 0 ? 1 : 0}"
+  elb_application_monitor_enabled = "${var.enabled && var.lb_type == "application" && var.shared_alb == "0" && length(var.recipients) > 0 ? 1 : 0}"
 }
 
 resource "datadog_timeboard" "elb_application" {
