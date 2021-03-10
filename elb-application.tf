@@ -193,12 +193,13 @@ module "elb_application_monitor_healthy_host_count" {
   product_domain = "${var.product_domain}"
   service        = "${var.service}"
   environment    = "${var.environment}"
+  cluster        = "${var.cluster}"
   tags           = "${var.tags}"
   timeboard_id   = "${join(",", datadog_timeboard.elb_application.*.id)}"
 
   name               = "${var.healthy_host_name != "" ? 
                         "${var.healthy_host_name}" : 
-                        "${var.product_domain} - ${var.lb_name} - ${var.environment} - Number of Healthy Hosts is Low"}"
+                        "${var.product_domain} - ${var.cluster} - ${var.lb_name} - ${var.environment} - Number of Healthy Hosts is Low"}"
   query              = "sum(last_1m):sum:aws.applicationelb.healthy_host_count{name:${var.lb_name}, environment:${var.environment}, service:${var.service}} by {name} <= ${var.healthy_host_count_thresholds["critical"]}"
   thresholds         = "${var.healthy_host_count_thresholds}"
   evaluation_delay   = "900"

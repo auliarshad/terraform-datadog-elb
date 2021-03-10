@@ -14,6 +14,11 @@ variable "service" {
   description = "The name of the service"
 }
 
+variable "cluster" {
+  type        = "string"
+  description = "The name of the cluster"
+}
+
 variable "lb_name" {
   type        = "string"
   description = "The name of the load balancer"
