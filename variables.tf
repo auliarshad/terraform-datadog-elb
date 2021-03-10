@@ -16,6 +16,7 @@ variable "service" {
 
 variable "cluster" {
   type        = "string"
+  default     = "-"
   description = "The name of the cluster"
 }
 
